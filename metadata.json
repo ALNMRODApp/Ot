@@ -1,0 +1,6 @@
+{
+  "name": "STF Code",
+  "description": "Mobile code editor and developer environment inspired by Visual Studio Code with Reach Agent functionality.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

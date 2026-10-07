@@ -1,0 +1,105 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile and preferences for STF Code",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "User email address" },
+        "displayName": { "type": "string", "description": "Display name" },
+        "photoUrl": { "type": "string", "description": "Optional user avatar URL" },
+        "theme": { "type": "string", "description": "Editor color theme" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["userId", "email", "displayName", "theme", "createdAt", "updatedAt"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Workspace project in STF Code",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique project identifier" },
+        "userId": { "type": "string", "description": "Owner UID" },
+        "name": { "type": "string", "description": "Project title" },
+        "description": { "type": "string", "description": "Project summary" },
+        "template": { "type": "string", "description": "Project template type" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["id", "userId", "name", "template", "createdAt", "updatedAt"]
+    },
+    "CodeFile": {
+      "title": "CodeFile",
+      "description": "Source code file in project workspace",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "File identifier" },
+        "userId": { "type": "string", "description": "Owner UID" },
+        "projectId": { "type": "string", "description": "Associated project ID" },
+        "name": { "type": "string", "description": "File name" },
+        "path": { "type": "string", "description": "Relative file path" },
+        "language": { "type": "string", "description": "Programming language" },
+        "content": { "type": "string", "description": "Source code text content" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["id", "userId", "projectId", "name", "path", "language", "content", "createdAt", "updatedAt"]
+    },
+    "CustomAgent": {
+      "title": "CustomAgent",
+      "description": "User created or configured AI Agent",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Agent identifier" },
+        "userId": { "type": "string", "description": "Owner UID" },
+        "name": { "type": "string", "description": "Agent name" },
+        "description": { "type": "string", "description": "Role overview" },
+        "systemInstruction": { "type": "string", "description": "System directive prompt" },
+        "iconName": { "type": "string", "description": "Icon identifier" },
+        "accentColorHex": { "type": "string", "description": "Hex color code" },
+        "category": { "type": "string", "description": "Domain specialty" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["id", "userId", "name", "description", "systemInstruction", "category", "createdAt", "updatedAt"]
+    },
+    "AgentMessage": {
+      "title": "AgentMessage",
+      "description": "Chat and code interaction with Reach Agent",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Message identifier" },
+        "userId": { "type": "string", "description": "Owner UID" },
+        "role": { "type": "string", "description": "Role: user or agent", "enum": ["user", "agent"] },
+        "content": { "type": "string", "description": "Message text" },
+        "codeSnippet": { "type": "string", "description": "Optional attached code snippet or patch" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Message timestamp" }
+      },
+      "required": ["id", "userId", "role", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document"
+    },
+    "/users/{userId}/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Projects belonging to the user"
+    },
+    "/users/{userId}/files/{fileId}": {
+      "schema": "CodeFile",
+      "description": "Code files belonging to the user"
+    },
+    "/users/{userId}/custom_agents/{agentId}": {
+      "schema": "CustomAgent",
+      "description": "Custom AI Agents created by the user"
+    },
+    "/users/{userId}/agent_messages/{messageId}": {
+      "schema": "AgentMessage",
+      "description": "Reach Agent history for the user"
+    }
+  }
+}
